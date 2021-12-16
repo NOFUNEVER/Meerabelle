@@ -1739,7 +1739,7 @@ class _StatsDrawerState extends State<StatsDrawer> {
             .collection('pets')
             .doc(_nameController.text)
             .collection('data')
-            .doc('creatinine').update({label.toString(): double.parse(_creatinineController.text)});
+            .doc('creatinine').set(  {label.toString(): double.parse(_creatinineController.text)},SetOptions(merge : true)   );
 
         await FirebaseFirestore.instance
             .collection('users')
@@ -1747,7 +1747,7 @@ class _StatsDrawerState extends State<StatsDrawer> {
             .collection('pets')
             .doc(_nameController.text)
             .collection('data')
-            .doc('glucose').update({label.toString(): double.parse(_glucoseController.text )});
+            .doc('glucose').set({label.toString(): double.parse(_glucoseController.text )},SetOptions(merge : true)   );
 
         await FirebaseFirestore.instance
             .collection('users')
@@ -1755,14 +1755,88 @@ class _StatsDrawerState extends State<StatsDrawer> {
             .collection('pets')
             .doc(_nameController.text)
             .collection('data')
-            .doc('BUN').update({label.toString(): double.parse(_bunController.text)});
+            .doc('BUN').set({label.toString(): double.parse(_bunController.text)},SetOptions(merge : true)   );
 
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('BUN Creatinine Ratio').set({label.toString(): double.parse(_bcrController.text)},SetOptions(merge : true)   );
 
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('phosphorus').set({label.toString(): double.parse(_phosphorusController.text)},SetOptions(merge : true)   );
 
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('calcium').set({label.toString(): double.parse(_calciumController.text)},SetOptions(merge : true)   );
 
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('sodium').set({label.toString(): double.parse(_sodiumController.text)},SetOptions(merge : true)   );
 
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('potassium').set({label.toString(): double.parse(_potassiumController.text)},SetOptions(merge : true)   );
 
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('NA:K Ratio').set({label.toString(): double.parse(_nakController.text)},SetOptions(merge : true)   );
 
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('total protein').set({label.toString(): double.parse(_protController.text)},SetOptions(merge : true)   );
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('albumin').set({label.toString(): double.parse(_albController.text)},SetOptions(merge : true)   );
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('globulin').set({label.toString(): double.parse(_globController.text)},SetOptions(merge : true)   );
+
+        await FirebaseFirestore.instance
+            .collection('users')
+            .doc(user.uid)
+            .collection('pets')
+            .doc(_nameController.text)
+            .collection('data')
+            .doc('cholesterol').set({label.toString(): double.parse(_cholController.text)} ,SetOptions(merge : true)   );
+
+        Navigator.of(context, rootNavigator: true).pop();
       },
     );
 

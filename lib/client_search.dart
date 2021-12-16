@@ -3,65 +3,65 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:search_page/search_page.dart';
+import 'vet_home_widget.dart';
+import 'vet_home.dart';
 
 import 'home_widget.dart';
 
 /// This is a very simple class, used to
 /// demo the `SearchPage` package
-class Vets {
-  String vname, address, email, phone;
+class Clients {
+  String cname, clname, phone;
 
-  Vets(this.vname, this.address, this.email, this.phone);
+  Clients(this.cname, this.clname, this.phone);
 }
 
-class VetSearchPage extends StatefulWidget {
+class ClientSearchPage extends StatefulWidget {
   int dex;
   int petdex;
 
-  VetSearchPage({Key? key, required this.petdex, required this.dex})
+  ClientSearchPage({Key? key, required this.petdex, required this.dex})
       : super(key: key);
 
   @override
-  State<VetSearchPage> createState() =>
-      _VetSearchPageState(this.petdex, this.dex);
+  State<ClientSearchPage> createState() =>
+      _ClientSearchPageState(this.petdex, this.dex);
 }
 
-class _VetSearchPageState extends State<VetSearchPage> {
+class _ClientSearchPageState extends State<ClientSearchPage> {
   int dex;
   int petdex;
   var vetsList;
   var petsList;
   var drawerlist = [];
   var vetdrawerlist = [];
+  var clientlist = [];
 
-  _VetSearchPageState(this.petdex, this.dex);
+  _ClientSearchPageState(this.petdex, this.dex);
 
-  List<Vets> vets = [];
-
-/*
-  static List<Vets> vets = [
-    Vets('Mike', 'Barron', '',''),
-    Vets('Todd', 'Black', '30',''),
-    Vets('Ahmad', 'Edwards', '55',''),
-    Vets('Anthony', 'Johnson', '67',''),
-    Vets('Annette', 'Brooks', '39',''),
-  ];
-  */
+  List<Clients> clients = [];
 
   User? user = FirebaseAuth.instance.currentUser;
 
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-        future:
-            FirebaseFirestore.instance.collection('vets').get().then((value) {
-          vetsList = value.docs;
-          drawerlist = vetsList;
+        future: FirebaseFirestore.instance
+            .collection('vets')
+            .doc(user!.uid)
+            .collection("clients")
+            .get()
+            .then((value) {
+          clientlist = value.docs;
+          drawerlist = clientlist;
 
+          print(clientlist[0].id);
           FirebaseFirestore.instance
-              .collection('users')
+              .collection('vets')
               .doc(user!.uid)
-              .collection('pets')
+              .collection('clients')
+              .doc(clientlist.elementAt(0).id)
+              .collection("pets")
               .get()
               .then((val2) {
             petsList = val2.docs;
@@ -69,11 +69,11 @@ class _VetSearchPageState extends State<VetSearchPage> {
             print('lololol ');
             print(vetdrawerlist);
           });
-          print('s ' + drawerlist.elementAt(0)['name'].toString());
+          print(' ' + drawerlist.elementAt(0)['name'].toString());
         }),
         builder: (context, snapshot) {
           return Scaffold(
-            appBar: AppBar(title: Text('Search Page'), actions: <Widget>[
+            appBar: AppBar(title: Text('Client Lookup'), actions: <Widget>[
               IconButton(
                 icon: const Icon(
                   Icons.backspace,
@@ -92,83 +92,96 @@ class _VetSearchPageState extends State<VetSearchPage> {
                 },
               ),
             ]),
-            body: StreamBuilder(
-              stream:
-                  FirebaseFirestore.instance.collection("vets").snapshots(),
-              builder: (context, snapshot) {
-                QuerySnapshot? snap = snapshot.data as QuerySnapshot<Object?>?;
+            body: Padding(
+              // Even Padding On All Sides
+              padding: EdgeInsets.all(10.0),
+              child: Card(
+                child: StreamBuilder(
+                  stream: FirebaseFirestore.instance
+                      .collection("vets")
+                      .doc(user!.uid)
+                      .collection("clients")
+                      .snapshots(),
+                  builder: (context, snapshot) {
+                    QuerySnapshot? snap =
+                        snapshot.data as QuerySnapshot<Object?>?;
 
-                return ListView.separated(
-                  itemCount: drawerlist.length - 1,
-                  separatorBuilder: (context, index) => const Divider(
-                    color: Colors.black,
-                  ),
-                  itemBuilder: (context, index) {
-                    Vets vet = Vets(
-                      drawerlist.elementAt(index)['business name'].toString(),
-                      drawerlist.elementAt(index)['Address'].toString(),
-                      drawerlist.elementAt(index)['email'].toString(),
-                      drawerlist.elementAt(index)['Phone Number'].toString(),
-                    );
-                    vet.vname =
-                        drawerlist.elementAt(index)['business name'].toString();
-                    vet.address =
-                        drawerlist.elementAt(index)['Address'].toString();
-
-                    return ListTile(
-                      title: Text(vet.vname),
-                      subtitle: Text(vet.address),
-                      trailing: Text(vet.phone),
-                      onTap: () {
-                        DocumentSnapshot snap = vetsList[index];
-                        FirebaseFirestore.instance
-                            .collection('users')
-                            .doc(user!.uid)
-                            .collection('pets')
-                            .doc('Meera')
-                            .collection('approved_vets')
-                            .doc(snap.id)
-                            .set({'role': 'assigned vet'});
-                        ScaffoldMessenger.of(context).showSnackBar(
-                          SnackBar(content: Text('Granting ' + vet.vname + ' permission to upload ' + vetdrawerlist.elementAt(petdex)['name'].toString()   + "'s records")),
+                    return ListView.separated(
+                      itemCount: drawerlist.length,
+                      separatorBuilder: (context, index) => const Divider(
+                        color: Colors.black,
+                      ),
+                      itemBuilder: (context, index) {
+                        Clients client = Clients(
+                          drawerlist.elementAt(index)['First Name'].toString(),
+                          drawerlist.elementAt(index)['Last Name'].toString(),
+                          drawerlist
+                              .elementAt(index)['Phone Number']
+                              .toString(),
                         );
+
+                        if (clients.length < drawerlist.length) {
+                          clients.add(client);
+                        }
+
+                        client.cname = drawerlist
+                            .elementAt(index)['First Name']
+                            .toString();
+                        client.phone = drawerlist
+                            .elementAt(index)['Phone Number']
+                            .toString();
+                        client.clname =
+                            drawerlist.elementAt(index)['Last Name'].toString();
+
+                        return ListTile(
+                          title: Text(client.cname + " " + client.clname),
+//                      subtitle: Text(client.address),
+                          trailing: Text(client.phone),
+                          onTap: () {
+
+                        DocumentSnapshot snap = clientlist[index];
+
                         Navigator.of(context)
                             .pushReplacement(MaterialPageRoute(
                           builder: (BuildContext context) =>
-                              HomePage(petdex: petdex, dex: 0),
+                              VetPage(petdex: petdex, dex: 0,client: snap.id),
                         ));
                       //   snap.id});
+
+
+                          },
+                        );
                       },
                     );
                   },
-                );
-              },
+                ),
+              ),
             ),
             floatingActionButton: FloatingActionButton(
               tooltip: 'Search people',
               onPressed: () => showSearch(
                 context: context,
-                delegate: SearchPage<Vets>(
+                delegate: SearchPage<Clients>(
                   onQueryUpdate: (s) => print(s),
-                  items: vets,
+                  items: clients,
                   searchLabel: 'Search people',
                   suggestion: const Center(
-                    child: Text('Filter people by  vname, surname or age'),
+                    child: Text('Filter people by  clientname, surname or age'),
                   ),
                   failure: const Center(
-                    child: Text('No vet found :('),
+                    child: Text('No clients found :('),
                   ),
-                  filter: (vet) => [
-                    vet.vname,
-                    vet.address,
-                    vet.email,
-                    vet.phone,
+                  filter: (client) => [
+                    client.cname,
+                    client.clname,
+                    client.phone,
                   ],
-                  builder: (vet) => ListTile(
-                    title: Text(vet.vname),
-                    subtitle: Text(vet.address),
-                    trailing: Text('${vet.phone} no'),
+                  builder: (client) => Card( child: ListTile(
+                    title: Text(client.cname + ' ' + client.clname),
+                    //       subtitle: Text(client.address),
+                    trailing: Text('${client.phone}'),
                   ),
+                )
                 ),
               ),
               child: Icon(Icons.search),

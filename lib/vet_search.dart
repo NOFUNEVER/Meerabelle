@@ -34,6 +34,7 @@ class _VetSearchPageState extends State<VetSearchPage> {
   var drawerlist = [];
   var vetdrawerlist = [];
 
+
   _VetSearchPageState(this.petdex, this.dex);
 
   List<Vets> vets = [];
@@ -65,7 +66,7 @@ class _VetSearchPageState extends State<VetSearchPage> {
         }),
         builder: (context, snapshot) {
           return Scaffold(
-            appBar: AppBar(title: Text('Search Page'), actions: <Widget>[
+            appBar: AppBar(title: Text('Search Vets'), actions: <Widget>[
               IconButton(
                 icon: const Icon(
                   Icons.backspace,
@@ -111,6 +112,11 @@ class _VetSearchPageState extends State<VetSearchPage> {
                               .elementAt(index)['Phone Number']
                               .toString(),
                         );
+
+                        var contains = vets.where((element) => element.address == vet.address);
+                        if(contains.isEmpty) {
+                          vets.add(vet);
+                        }
                         vet.vname = drawerlist
                             .elementAt(index)['business name']
                             .toString();
@@ -199,7 +205,7 @@ class _VetSearchPageState extends State<VetSearchPage> {
                             Navigator.of(context)
                                 .pushReplacement(MaterialPageRoute(
                               builder: (BuildContext context) =>
-                                  HomePage(petdex: petdex, dex: 0),
+                                  VetSearchPage(petdex: petdex, dex: 0),
                             ));
                             //   snap.id});
                           },
@@ -216,7 +222,7 @@ class _VetSearchPageState extends State<VetSearchPage> {
                 context: context,
                 delegate: SearchPage<Vets>(
                   onQueryUpdate: (s) => print(s),
-                  items: vets,
+                  items:vets,
                   searchLabel: 'Search people',
                   suggestion: const Center(
                     child: Text('Filter people by  vname, surname or age'),
@@ -230,11 +236,100 @@ class _VetSearchPageState extends State<VetSearchPage> {
                     vet.email,
                     vet.phone,
                   ],
-                  builder: (vet) => ListTile(
+                  builder: (vet) => Card( child: ListTile(
                     title: Text(vet.vname),
                     subtitle: Text(vet.address),
                     trailing: Text('${vet.phone} no'),
+                    onTap: () async {
+
+                      var index = vetsList.indexWhere((element) => element["business name"] == vet.vname);
+                      DocumentSnapshot snap = vetsList[index];
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user!.uid)
+                          .collection('pets')
+                          .doc(vetdrawerlist
+                          .elementAt(petdex)
+                          .data()['name'])
+                          .collection('approved_vets')
+                          .doc(snap.id)
+                          .set({'role': 'assigned vet'});
+//
+                      FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user!.uid)
+                          .collection('approved_vets')
+                          .doc(snap.id)
+                          .set({'role': 'assigned vet'});
+
+
+                      var dat =   await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user!.uid).get().then((val){
+
+                        return val.data();
+
+                      });
+
+                      var dat2 =   await FirebaseFirestore.instance
+                          .collection('users')
+                          .doc(user!.uid)
+                          .collection('pets')
+                          .doc(
+                          vetdrawerlist
+                              .elementAt(petdex)
+                              .data()['name']
+
+                      ).get().then((val){
+
+                        return val.data();
+
+                      });
+                      //  copy(petdex, vetdrawerlist[index]);
+                      FirebaseFirestore.instance
+                          .collection('vets')
+                          .doc(snap.id)
+                          .collection('clients')
+                          .doc(user!.uid)
+
+                          .set(  dat!  );
+
+
+
+                      FirebaseFirestore.instance
+                          .collection('vets')
+                          .doc(snap.id)
+                          .collection('clients')
+                          .doc(user!.uid)
+                          .collection('pets')
+                          .doc(  vetdrawerlist
+                          .elementAt(petdex)
+                          .data()['name'] )
+
+                          .set(  dat2!  );
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        SnackBar(
+                            content: Text('Granting ' +
+                                vet.vname +
+                                ' permission to upload ' +
+                                vetdrawerlist
+                                    .elementAt(petdex)['name']
+                                    .toString() +
+                                "'s records")),
+                      );
+                      Navigator.of(context)
+                          .pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            VetSearchPage(petdex: petdex, dex: 0),
+                      ));
+                      //   snap.id});
+
+
+
+
+                    },
                   ),
+                ),
                 ),
               ),
               child: Icon(Icons.search),

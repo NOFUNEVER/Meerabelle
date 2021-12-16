@@ -33,7 +33,7 @@ class _HomePageState extends State<HomePage> {
   User? user = FirebaseAuth.instance.currentUser;
   var petsList;
   var drawerlist = [];
-  String currentPet = 'Meera';
+ // String currentPet = 'Meera';
   int _currentIndex = 0;
   final List _children = [];
   var bar = '';
@@ -251,6 +251,7 @@ class _HomePageState extends State<HomePage> {
               ],
             ),
           );
+
         });
   }
 }

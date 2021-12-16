@@ -5,6 +5,7 @@ import 'package:flutter_login/flutter_login.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:google_sign_in/google_sign_in.dart';
 import 'package:flutter/material.dart';
+import 'package:meerabelle/client_search.dart';
 import 'package:meerabelle/create_profile.dart';
 import 'home_widget.dart';
 import 'vet_home_widget.dart';
@@ -190,7 +191,7 @@ return user;
 
 
                    await Navigator.of(context).pushReplacement(MaterialPageRoute(
-                      builder: (BuildContext context) => VetPage(petdex: 0, dex: 0),
+                      builder: (BuildContext context) => ClientSearchPage(petdex: 0, dex: 0),
                     ));
 
 

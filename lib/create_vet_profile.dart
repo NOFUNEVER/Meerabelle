@@ -25,7 +25,6 @@ class _CreateVetProfileState extends State<CreateVetProfile> {
   User? user = FirebaseAuth.instance.currentUser;
   UploadTask? task;
 
-
   _CreateVetProfileState();
 
   final _formKey = GlobalKey<FormState>();
@@ -42,181 +41,187 @@ class _CreateVetProfileState extends State<CreateVetProfile> {
     var firstName;
     var lastName;
 
-
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Your Profile'),
       ),
-      body: Form(
-        key: _formKey,
-        child: Column(
-          mainAxisAlignment: MainAxisAlignment.start,
-          crossAxisAlignment: CrossAxisAlignment.center,
-          children: [
-            Container(
-              child: TextFormField(
-                // The validator receives the text that the user has entered.
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(labelText: 'business_name'),
-                validator: (value) {
-                  business_name = value;
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (String? value) {}, ),
+      body: SingleChildScrollView(
+        child: Form(
+          key: _formKey,
+          child:  Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+            child: Card( child: Padding(
+            padding: EdgeInsets.symmetric(vertical: 10.0, horizontal: 25.0),
+            child: Column(
+              mainAxisAlignment: MainAxisAlignment.start,
+              crossAxisAlignment: CrossAxisAlignment.center,
+              children: [
+                Container(
+                  child: TextFormField(
+                    // The validator receives the text that the user has entered.
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(
+                        labelText: 'Name of Practice '),
+                    validator: (value) {
+                      business_name = value;
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {},
+                  ),
+                ),
+                Container(
+                  child: TextFormField(
+                    // The validator receives the text that the user has entered.
+                    textAlign: TextAlign.center,
+                    decoration:
+                        const InputDecoration(labelText: 'Dr. On Staff '),
+                    validator: (value) {
+                      dr_onstaff = value;
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {},
+                  ),
+                ),
+                Container(
+                  child: TextFormField(
+                    // The validator receives the text that the user has entered.
+                    textAlign: TextAlign.center,
+                    decoration:
+                        const InputDecoration(labelText: 'Dr. On Staff '),
+                    validator: (value) {
+                      dr_onstaff2 = value;
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {},
+                  ),
+                ),
+                Container(
+                  child: TextFormField(
+                    // The validator receives the text that the user has entered.
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(labelText: 'Address'),
+                    validator: (value) {
+                      address = value;
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    onSaved: (String? value) {},
+                  ),
+                ),
+                Container(
+                  child: TextFormField(
+                    // The validator receives the text that the user has entered.
+                    textAlign: TextAlign.center,
+                    decoration:
+                        const InputDecoration(labelText: 'Phone Number'),
+                    validator: (value) {
+                      phone = value;
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.phone,
+                    onSaved: (String? value) {},
+                  ),
+                ),
+                Container(
+                  child: TextFormField(
+                    // The validator receives the text that the user has entered.
+                    textAlign: TextAlign.center,
+                    decoration: const InputDecoration(labelText: 'Web Site'),
+                    validator: (value) {
+                      website = value;
+                      if (value == null || value.isEmpty) {
+                        return 'Please enter some text';
+                      }
+                      return null;
+                    },
+                    keyboardType: TextInputType.phone,
+                    onSaved: (String? value) {},
+                  ),
+                ),
+                const SizedBox(height: 100),
+                ElevatedButton(
+                  onPressed: () async {
+                    selectFile();
+                  },
+                  child: const Text("Business Profile Picture",
+                      style: TextStyle(fontSize: 15)),
+                ),
+                Text(fName, style: const TextStyle(fontSize: 15)),
+                task != null ? buildUploadStatus(task!) : Container(),
+                const SizedBox(height: 50),
+                Padding(
+                  padding: const EdgeInsets.symmetric(vertical: 5.0),
+                  child: ElevatedButton(
+                    onPressed: () async {
+                      // Validate returns true if the form is valid, or false otherwise.
+                      if (_formKey.currentState!.validate()) {
+                        // If the form is valid, display a snackbar. In the real world,
+                        // you'd often call a server or save the information in a database.
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          const SnackBar(content: Text('Processing Data')),
+                        );
+                      }
+                      User? user = FirebaseAuth.instance.currentUser;
+
+                      await FirebaseFirestore.instance
+                          .collection('vets')
+                          .doc(user!.uid)
+                          .update({'business name': business_name});
+
+                      await FirebaseFirestore.instance
+                          .collection('vets')
+                          .doc(user.uid)
+                          .update({'Address': address});
+                      await FirebaseFirestore.instance
+                          .collection('vets')
+                          .doc(user.uid)
+                          .update({'Phone Number': phone});
+                      await FirebaseFirestore.instance
+                          .collection('vets')
+                          .doc(user.uid)
+                          .update({'Website': website});
+                      await FirebaseFirestore.instance
+                          .collection('vets')
+                          .doc(user.uid)
+                          .update({'Dr On Staff #1 ': dr_onstaff});
+                      await FirebaseFirestore.instance
+                          .collection('vets')
+                          .doc(user.uid)
+                          .update({'Dr On Staff #2': dr_onstaff2});
+
+                      Navigator.of(context).pushReplacement(MaterialPageRoute(
+                        builder: (BuildContext context) =>
+                            VetPage(petdex: 0, dex: 0, client: ''),
+                      ));
+                    },
+                    child: const Text('Submit'),
+                  ),
+                ),
+              ],
             ),
-
-            Container(
-              child: TextFormField(
-                // The validator receives the text that the user has entered.
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(labelText: 'Dr. On Staff '),
-                validator: (value) {
-                  dr_onstaff = value;
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (String? value) {}, ),
-            ),
-            Container(
-              child: TextFormField(
-                // The validator receives the text that the user has entered.
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(labelText: 'Dr. On Staff '),
-                validator: (value) {
-                  dr_onstaff2 = value;
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (String? value) {}, ),
-            ),
-            Container(
-              child: TextFormField(
-                // The validator receives the text that the user has entered.
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(labelText: 'Address'),
-                validator: (value) {
-                  address = value;
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                onSaved: (String? value) {}, ),
-            ),
-            Container(
-              child: TextFormField(
-                // The validator receives the text that the user has entered.
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(labelText: 'Phone Number'),
-                validator: (value) {
-                  phone = value;
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.phone,
-                onSaved: (String? value) {}, ),
-            ),
-            Container(
-              child: TextFormField(
-                // The validator receives the text that the user has entered.
-                textAlign: TextAlign.center,
-                decoration: const InputDecoration(labelText: 'Web Site'),
-                validator: (value) {
-                  website = value;
-                  if (value == null || value.isEmpty) {
-                    return 'Please enter some text';
-                  }
-                  return null;
-                },
-                keyboardType: TextInputType.phone,
-                onSaved: (String? value) {}, ),
-            ),
-            const SizedBox(height: 100),
-            ElevatedButton(
-              onPressed: () async {
-                selectFile();
-              },
-              child: const Text("Business Profile Picture", style: TextStyle(fontSize: 15)),
-            ),
-            Text(fName, style: const TextStyle(fontSize: 15)),
-            task != null ? buildUploadStatus(task!) : Container(),
-            const SizedBox(height: 50),
-
-
-
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
-              child: ElevatedButton(
-                onPressed: () async {
-                  // Validate returns true if the form is valid, or false otherwise.
-                  if (_formKey.currentState!.validate()) {
-                    // If the form is valid, display a snackbar. In the real world,
-                    // you'd often call a server or save the information in a database.
-                    ScaffoldMessenger.of(context).showSnackBar(
-                      const SnackBar(content: Text('Processing Data')),
-                    );
-                  }
-                  User? user = FirebaseAuth.instance.currentUser;
-
-                  await FirebaseFirestore.instance
-                      .collection('vets')
-                      .doc(user!.uid)
-                      .update({'business name': business_name});
-
-                  await FirebaseFirestore.instance
-                      .collection('vets')
-                      .doc(user.uid)
-                      .update({'Address': address});
-                  await FirebaseFirestore.instance
-                      .collection('vets')
-                      .doc(user.uid)
-                      .update({'Phone Number': phone});
-                  await FirebaseFirestore.instance
-                      .collection('vets')
-                      .doc(user.uid)
-                      .update({'Website': website});
-                  await FirebaseFirestore.instance
-                      .collection('vets')
-                      .doc(user.uid)
-                      .update({'Dr On Staff #1 ': dr_onstaff});
-                  await FirebaseFirestore.instance
-                      .collection('vets')
-                      .doc(user.uid)
-                      .update({'Dr On Staff #2': dr_onstaff2});
-
-
-                  Navigator.of(context).pushReplacement(MaterialPageRoute(
-                    builder: (BuildContext context) => VetPage(petdex:0,dex: 0),
-                  ));
-                },
-                child: const Text('Submit'),
-              ),
-            ),
-
-
-
-          ],
+          ),
+        ),
+        ),
         ),
       ),
     );
   }
 
-
-
-
-
   Future selectFile() async {
-
-
     FilePickerResult? result = await FilePicker.platform.pickFiles(
       allowMultiple: false,
       type: FileType.custom,
@@ -247,8 +252,8 @@ class _CreateVetProfileState extends State<CreateVetProfile> {
       // User canceled the picker
     }
     setState(() {});
-
   } //selectFile
+
   Widget buildUploadStatus(UploadTask task) => StreamBuilder<TaskSnapshot>(
       stream: task.snapshotEvents,
       builder: (context, snapshot) {
@@ -284,9 +289,9 @@ class Storage {
   User? user = FirebaseAuth.instance.currentUser;
   final FirebaseStorage storage = FirebaseStorage.instance;
 
-
   Future<ListResult> listFiles() async {
-    ListResult results = await storage.ref('files/' + user!.uid + '/').listAll();
+    ListResult results =
+        await storage.ref('files/' + user!.uid + '/').listAll();
     results.items.forEach((Reference ref) {
       print('Found File : $ref');
     });
@@ -294,12 +299,10 @@ class Storage {
   }
 
   Future<String> downloadURL(String recordName) async {
-    String downloadURL = await storage.ref('files/' + user!.uid + '/' + recordName).getDownloadURL();
-
+    String downloadURL = await storage
+        .ref('files/' + user!.uid + '/' + recordName)
+        .getDownloadURL();
 
     return downloadURL;
-
   }
-
-
 }

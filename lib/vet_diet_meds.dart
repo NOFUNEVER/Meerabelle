@@ -8,16 +8,16 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:path/path.dart';
 
-class DietMeds extends StatefulWidget {
+class VetDietMeds extends StatefulWidget {
   int curPet;
 
-  DietMeds({Key? key, required this.curPet}) : super(key: key);
+  VetDietMeds({Key? key, required this.curPet}) : super(key: key);
 
   @override
-  State<DietMeds> createState() => _DietMedsState(this.curPet);
+  State<VetDietMeds> createState() => _VetDietMedsState(this.curPet);
 }
 
-class _DietMedsState extends State<DietMeds> {
+class _VetDietMedsState extends State<VetDietMeds> {
   UploadTask? task;
   User? user = FirebaseAuth.instance.currentUser;
   int curPet = 0;
@@ -65,7 +65,7 @@ class _DietMedsState extends State<DietMeds> {
   }
   final Storage storage = Storage();
 
-  _DietMedsState(this.curPet);
+  _VetDietMedsState(this.curPet);
 
   @override
   Widget build(BuildContext context) {

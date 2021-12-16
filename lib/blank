@@ -1,0 +1,87 @@
+ Expanded(
+                          child: Container(
+                            padding: const EdgeInsets.only(
+                                left: 5.0, bottom: 5.0, top: 10.0, right: 20.0),
+                            child: Card(
+                              color: Colors.black.withOpacity(.8),
+                              elevation: 19,
+                              child: GestureDetector(
+                                onLongPress: () {
+                                  if (bun_enable == false) {
+                                    bun_enable = true;
+                                    setState(() => bun_enable);
+                                  }
+
+                                  _bunController.selection =
+                                      TextSelection.fromPosition(TextPosition(
+                                          offset:
+                                              _bunController.text.length));
+                                },
+                                child: Container(
+                                  padding: const EdgeInsets.only(
+                                      left: 7.0,
+                                      bottom: 7.0,
+                                      top: 7.0,
+                                      right: 7.0),
+                                  child: TextFormField(
+                                    style:const TextStyle(color:Colors.white),
+                                    // The validator receives the text that the user has entered.
+                                    textAlign: TextAlign.center,
+                                    enabled: bun_enable,
+                                    decoration: InputDecoration(
+                                      fillColor: Colors.white.withOpacity(.6),
+                                      filled: false,
+                                      labelText: 'BUN',
+                                      labelStyle: const TextStyle(
+                                        fontSize: 16,
+                                        fontWeight: FontWeight.bold,
+                                        color: Colors.blue,
+                                      ),
+                                      disabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue, width: 3.0),
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                      ),
+                                      enabledBorder: OutlineInputBorder(
+                                        borderSide: const BorderSide(
+                                            color: Colors.blue, width: 3.0),
+                                        borderRadius:
+                                            BorderRadius.circular(18.0),
+                                      ),
+                                    ),
+                                    validator: (value) {
+                                      BUN = value;
+                                      if (value == null || value.isEmpty) {
+                                        return 'Please enter some text';
+                                      }
+                                      return null;
+                                    },
+                                    controller: _bunController,
+                                    onFieldSubmitted: (String? value) async {
+                                      //  setState(() => species);
+                                      BUN = value;
+                                      await FirebaseFirestore.instance
+                                          .collection('users')
+                                          .doc(user.uid)
+                                          .collection('pets')
+                                          .doc(petsList
+                                              .elementAt(curPet)['name']
+                                              .toString())
+                                          .update({'BUN': BUN});
+                                      bun_enable = false;
+                                      setState(() => bun_enable);
+                                    },
+                                    onChanged: (String value) {
+                                      BUN = value;
+                                      //    setValues();
+                                    },
+                                    onSaved: (String? value) {
+                                      //  setValues();
+                                    },
+                                  ),
+                                ),
+                              ),
+                            ),
+                          ),
+                        ),

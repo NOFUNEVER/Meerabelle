@@ -3,7 +3,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:meerabelle/client_search.dart';
 import 'edit_pet.dart';
-import 'records.dart';
+import 'vet_records.dart';
 import 'package:bottom_navy_bar/bottom_navy_bar.dart';
 import 'vet_home.dart';
 import 'vet_diet_meds.dart';
@@ -104,7 +104,7 @@ class _VetPageState extends State<VetPage> {
           },
           children: <Widget>[
             Container( child: VetHome(curPet: petdex, client: client)),
-            Container(child: MyRecords(petdex:petdex, temp: '')),
+            Container(child: VetRecords(petdex:petdex, temp: '')),
             Container( child: VetDietMeds(curPet: petdex)),
             Container( child: ClientSearchPage(dex:dex ,petdex: petdex)),
           ],

@@ -77,7 +77,7 @@ class _MyChartsState extends State<MyCharts> {
                                 // Initialize category axis
                                 primaryXAxis: CategoryAxis(),
                                 primaryYAxis:
-                                    NumericAxis(minimum: 0, maximum: 4),
+NumericAxis(),//                                    NumericAxis(minimum: 0, maximum: 4),
                                 series: <ChartSeries>[
                                   // Initialize line series
                                   LineSeries<ChartData, String>(

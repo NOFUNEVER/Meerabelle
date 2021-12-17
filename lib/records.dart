@@ -39,7 +39,9 @@ class _MyRecordsState extends State<MyRecords> {
 
 
     return Scaffold(
-      body: Column(
+
+      body:Padding(padding:EdgeInsets.all(25.0),
+        child: Card(child:Column(
        mainAxisAlignment: MainAxisAlignment.end,
        crossAxisAlignment: CrossAxisAlignment.center,
         children: [
@@ -121,6 +123,9 @@ class _MyRecordsState extends State<MyRecords> {
           const SizedBox(height: 50),
         ],
       ),
+
+    ),
+    ),
     );
 
 

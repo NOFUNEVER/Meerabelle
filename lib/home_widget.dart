@@ -8,6 +8,8 @@ import 'add_pet.dart';
 import 'charts.dart';
 import 'diet_meds.dart';
 import 'edit_pet.dart';
+import 'login.dart';
+import 'main.dart';
 import 'pet_home.dart';
 import 'records.dart';
 import 'stats_drawer.dart';
@@ -91,13 +93,25 @@ class _HomePageState extends State<HomePage> {
                     future: storage.profURL('profile_pic'),
                     builder: (context, AsyncSnapshot<String> snapshot) {
                       return Container(
+
                         margin: const EdgeInsets.fromLTRB(15, 0, 0, 0),
                         child:     GestureDetector(
                           onTap: () async {
 
-                            Navigator.pushReplacement(
-                                context, MaterialPageRoute(builder: (context) => EditProfile(pdex:petdex),
-                            ));
+
+                            showDialog(
+                                context: context,
+                                builder: (BuildContext context) {
+                                  return AlertDialog(
+                                    insetPadding: EdgeInsets.all(80),
+                                    title: Text('Edit profile or Logout?'),
+                                    content: setuplogouteditContainer(),
+                                  );
+                                });
+
+                           // Navigator.pushReplacement(
+                            //    context, MaterialPageRoute(builder: (context) => EditProfile(pdex:petdex),
+                           // ));
 
 
                       },
@@ -254,6 +268,55 @@ class _HomePageState extends State<HomePage> {
 
         });
   }
+  poop() async {
+
+  }
+  Future<void> _signOut() async {
+    await FirebaseAuth.instance.signOut();
+  }
+  Widget setuplogouteditContainer() {
+    User? user = FirebaseAuth.instance.currentUser;
+    poop();
+    return Container(
+      height: 200.0, // Change as per your requirement
+      width: 100.0, // Change as per your requirement
+      child: Scaffold(
+        body: Padding(
+          // Even Padding On All Sides
+          padding: const EdgeInsets.all(10.0),
+          child: Card(
+              child: ListView(
+              children: <Widget>[
+
+
+                  ListTile(
+                    title: Text('Edit Profile'),
+                    onTap: () {
+                       Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) => MyApp(),
+                       ));
+                    },
+                  ),
+
+                ListTile(
+                  title: Text('Logout'),
+                  onTap: () {
+                  _signOut();
+                  Navigator.pushReplacement(
+                      context, MaterialPageRoute(builder: (context) => LoginScreen(),
+                  ));
+                  },
+                )
+ ]
+
+
+
+              )),
+        ),
+      ),
+    );
+  }
+
 }
 
 class Storage {

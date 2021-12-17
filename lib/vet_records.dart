@@ -39,87 +39,96 @@ class _VetRecordsState extends State<VetRecords> {
 
 
     return Scaffold(
-      body: Column(
-       mainAxisAlignment: MainAxisAlignment.end,
-       crossAxisAlignment: CrossAxisAlignment.center,
-        children: [
+      body: Padding(padding:EdgeInsets.all(25.0),
+        child: Card(child:Column(
+          mainAxisAlignment: MainAxisAlignment.end,
+          crossAxisAlignment: CrossAxisAlignment.center,
+          children: [
 
 
-          FutureBuilder(
-              future: storage.listFiles(),
-              builder:
-                  (BuildContext context, AsyncSnapshot<ListResult> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
-                  return Container(
-                    padding: const EdgeInsets.symmetric(horizontal: 20),
-                    height: 220,
-                    child: ListView.builder(
-                        scrollDirection: Axis.vertical,
-                        shrinkWrap: true,
-                        itemCount: snapshot.data!.items.length,
-                        itemBuilder: (BuildContext context, int index) {
-                          return Padding(
-                            padding: const EdgeInsets.all(6.0),
-                            child: ElevatedButton(
-                              onPressed: () {
-                               setState(() => temp = snapshot.data!.items[index].name);
+             Text("Items will not appear in list untill accepted by client"),
+            SizedBox(height: 30),
 
-                              },
-                              child: Text(snapshot.data!.items[index].name),
-                            ),
-                          );
-                        }),
-                  );
-                }
-                if (snapshot.connectionState == ConnectionState.waiting ||
-                    !snapshot.hasData) {
-                //  return CircularProgressIndicator();
-                }
-                return Container();
-              }),
-          FutureBuilder(
-              future: storage.downloadURL( temp ),
+            FutureBuilder(
+                future: storage.listFiles(),
+                builder:
+                    (BuildContext context, AsyncSnapshot<ListResult> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
+                    snapshot.data!.items.remove('profile_pic');
+                    return Container(
+                      padding: const EdgeInsets.symmetric(horizontal: 20),
+                      height: 220,
+                      child: ListView.builder(
+                          scrollDirection: Axis.vertical,
+                          shrinkWrap: true,
+                          itemCount: snapshot.data!.items.length,
+                          itemBuilder: (BuildContext context, int index) {
+                            return Padding(
+                              padding: const EdgeInsets.all(6.0),
+                              child: ElevatedButton(
+                                onPressed: () {
+                                  setState(() => temp = snapshot.data!.items[index].name);
 
-              //future: storage.downloadURL('elim_1.jpg'),
-              builder:
-                  (BuildContext context, AsyncSnapshot<String> snapshot) {
-                if (snapshot.connectionState == ConnectionState.done &&
-                    snapshot.hasData) {
+                                },
+                                child: Text(snapshot.data!.items[index].name),
+                              ),
+                            );
+                          }),
+                    );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting ||
+                      !snapshot.hasData) {
+                    snapshot.data!.items.remove('profile_pic');
+                    //  return CircularProgressIndicator();
+                  }
+                  return Container();
+                }),
+            FutureBuilder(
+                future: storage.downloadURL( temp ),
 
-    WidgetsBinding.instance!.addPostFrameCallback((_) {
-                  Navigator.pushReplacement(
-                    context, MaterialPageRoute(builder: (context) => PdfView(petdex: petdex,temp: snapshot.data),
-                  ));
-    });
-                //  return Container(width:99, height:160,
-                //  child: SfPdfViewer.network(
-                 //   snapshot.data!,
-                 // ),
+                //future: storage.downloadURL('elim_1.jpg'),
+                builder:
+                    (BuildContext context, AsyncSnapshot<String> snapshot) {
+                  if (snapshot.connectionState == ConnectionState.done &&
+                      snapshot.hasData) {
 
-                  //Image.network(snapshot.data!,
-                 // fit:BoxFit.cover,
-                  //)
+                    WidgetsBinding.instance!.addPostFrameCallback((_) {
+                      Navigator.pushReplacement(
+                          context, MaterialPageRoute(builder: (context) => PdfView(petdex: petdex,temp: snapshot.data),
+                      ));
+                    });
+                    //  return Container(width:99, height:160,
+                    //  child: SfPdfViewer.network(
+                    //   snapshot.data!,
+                    // ),
 
-                //  );
-                }
-                if (snapshot.connectionState == ConnectionState.waiting ||
-                    !snapshot.hasData) {
-                //  return CircularProgressIndicator();
-                }
-                return Container();
-              }),
-          const SizedBox(height: 100),
-          ElevatedButton(
-            onPressed: () async {
-              selectFile();
-            },
-            child: const Text("Upload ", style: TextStyle(fontSize: 15)),
-          ),
-          Text(fName, style: const TextStyle(fontSize: 15)),
-          task != null ? buildUploadStatus(task!) : Container(),
-          const SizedBox(height: 50),
-        ],
+                    //Image.network(snapshot.data!,
+                    // fit:BoxFit.cover,
+                    //)
+
+                    //  );
+                  }
+                  if (snapshot.connectionState == ConnectionState.waiting ||
+                      !snapshot.hasData) {
+                    //  return CircularProgressIndicator();
+                  }
+                  return Container();
+                }),
+            const SizedBox(height: 100),
+            ElevatedButton(
+              onPressed: () async {
+                selectFile();
+              },
+              child: const Text("Upload ", style: TextStyle(fontSize: 15)),
+            ),
+            Text(fName, style: const TextStyle(fontSize: 15)),
+            task != null ? buildUploadStatus(task!) : Container(),
+            const SizedBox(height: 50),
+          ],
+        ),
+
+        ),
       ),
     );
 
@@ -203,6 +212,7 @@ class Storage {
     results.items.forEach((Reference ref) {
       print('Found File : $ref');
     });
+    results.items.remove('profile_pic');
     return results;
   }
 

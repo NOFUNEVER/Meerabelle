@@ -46,263 +46,237 @@ class _AddPetState extends State<AddPet> {
       appBar: AppBar(
         title: const Text('Add a Pet'),
       ),
-      body: SingleChildScrollView(
-        child: Padding(
-          padding: const EdgeInsets.all(25.0),
-          child: Card(
-            child: Padding(
-              padding: const EdgeInsets.symmetric(vertical: 5.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                  mainAxisAlignment: MainAxisAlignment.start,
-                  crossAxisAlignment: CrossAxisAlignment.center,
-                  children: [
-                    Container ( width:200, child:const TextField(
-                      textAlign: TextAlign.center,
-                      decoration: InputDecoration(
-                        border: OutlineInputBorder(),
-                        labelText: 'Lets add a pet',
-                      ),
+      body: Scrollbar(
+        child: SingleChildScrollView(
+          child: Padding(
+            padding: const EdgeInsets.all(25.0),
+            child: Card(
+              child: Padding(
+                padding: const EdgeInsets.symmetric(vertical: 5.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.start,
+                    crossAxisAlignment: CrossAxisAlignment.center,
+                    children: [
 
-                    ),),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
-                      child: TextFormField(
-                        // The validator receives the text that the user has entered.
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          labelText: 'Name',
-                          contentPadding: const EdgeInsets.only(
-                              left: 30, top: 0.0, bottom: 0.0),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.blueAccent, width: 3.0),
-                            borderRadius: BorderRadius.circular(35.0),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
+                        child: TextFormField(
+                          // The validator receives the text that the user has entered.
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            labelText: 'Name',
+                            contentPadding: const EdgeInsets.only(
+                                left: 30, top: 0.0, bottom: 0.0),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 3.0),
+                              borderRadius: BorderRadius.circular(35.0),
+                            ),
                           ),
+                          validator: (value) {
+                            name = value;
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          onSaved: (String? value) {},
                         ),
-                        validator: (value) {
-                          name = value;
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        onSaved: (String? value) {},
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
-                      child: TextFormField(
-                        // The validator receives the text that the user has entered.
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          labelText: 'Species',
-                          contentPadding: const EdgeInsets.only(
-                              left: 30, top: 0.0, bottom: 0.0),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.blueAccent, width: 3.0),
-                            borderRadius: BorderRadius.circular(35.0),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                        child: TextFormField(
+                          // The validator receives the text that the user has entered.
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            labelText: 'Species',
+                            contentPadding: const EdgeInsets.only(
+                                left: 30, top: 0.0, bottom: 0.0),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 3.0),
+                              borderRadius: BorderRadius.circular(35.0),
+                            ),
                           ),
+                          validator: (value) {
+                            species = value;
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          onSaved: (String? value) {},
                         ),
-                        validator: (value) {
-                          species = value;
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        onSaved: (String? value) {},
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
-                      child: TextFormField(
-                        // The validator receives the text that the user has entered.
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          labelText: 'Sex',
-                          contentPadding: const EdgeInsets.only(
-                              left: 30, top: 0.0, bottom: 0.0),
-                          border: OutlineInputBorder(
-                            borderSide: const BorderSide(
-                                color: Colors.blueAccent, width: 3.0),
-                            borderRadius: BorderRadius.circular(35.0),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                        child: TextFormField(
+                          // The validator receives the text that the user has entered.
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            labelText: 'Sex',
+                            contentPadding: const EdgeInsets.only(
+                                left: 30, top: 0.0, bottom: 0.0),
+                            border: OutlineInputBorder(
+                              borderSide: const BorderSide(
+                                  color: Colors.blueAccent, width: 3.0),
+                              borderRadius: BorderRadius.circular(35.0),
+                            ),
                           ),
+                          validator: (value) {
+                            sex = value;
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.phone,
+                          onSaved: (String? value) {},
                         ),
-                        validator: (value) {
-                          sex = value;
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.phone,
-                        onSaved: (String? value) {},
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
-                      child: TextFormField(
-                        // The validator receives the text that the user has entered.
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          labelText: 'Age',
-                          contentPadding:
-                              EdgeInsets.only(left: 30, top: 0.0, bottom: 0.0),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.blueAccent, width: 3.0),
-                            borderRadius: BorderRadius.circular(35.0),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                        child: TextFormField(
+                          // The validator receives the text that the user has entered.
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            labelText: 'Age',
+                            contentPadding: EdgeInsets.only(
+                                left: 30, top: 0.0, bottom: 0.0),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.blueAccent, width: 3.0),
+                              borderRadius: BorderRadius.circular(35.0),
+                            ),
                           ),
+                          validator: (value) {
+                            age = value;
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.phone,
+                          onSaved: (String? value) {},
                         ),
-                        validator: (value) {
-                          age = value;
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.phone,
-                        onSaved: (String? value) {},
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
-                      child: TextFormField(
-                        // The validator receives the text that the user has entered.
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          labelText: 'Weight',
-                          contentPadding:
-                              EdgeInsets.only(left: 30, top: 0.0, bottom: 0.0),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.blueAccent, width: 3.0),
-                            borderRadius: BorderRadius.circular(35.0),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                        child: TextFormField(
+                          // The validator receives the text that the user has entered.
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            labelText: 'Weight',
+                            contentPadding: EdgeInsets.only(
+                                left: 30, top: 0.0, bottom: 0.0),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.blueAccent, width: 3.0),
+                              borderRadius: BorderRadius.circular(35.0),
+                            ),
                           ),
+                          validator: (value) {
+                            weight = value;
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.phone,
+                          onSaved: (String? value) {},
                         ),
-                        validator: (value) {
-                          weight = value;
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.phone,
-                        onSaved: (String? value) {},
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
-                      child: TextFormField(
-                        // The validator receives the text that the user has entered.
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          labelText: 'Color',
-                          contentPadding:
-                              EdgeInsets.only(left: 30, top: 0.0, bottom: 0.0),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.blueAccent, width: 3.0),
-                            borderRadius: BorderRadius.circular(35.0),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                        child: TextFormField(
+                          // The validator receives the text that the user has entered.
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            labelText: 'Color',
+                            contentPadding: EdgeInsets.only(
+                                left: 30, top: 0.0, bottom: 0.0),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.blueAccent, width: 3.0),
+                              borderRadius: BorderRadius.circular(35.0),
+                            ),
                           ),
+                          validator: (value) {
+                            color = value;
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.phone,
+                          onSaved: (String? value) {},
                         ),
-                        validator: (value) {
-                          color = value;
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.phone,
-                        onSaved: (String? value) {},
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
-                      child: TextFormField(
-                        // The validator receives the text that the user has entered.
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          labelText: 'Breed',
-                          contentPadding:
-                              EdgeInsets.only(left: 30, top: 0.0, bottom: 0.0),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.blueAccent, width: 3.0),
-                            borderRadius: BorderRadius.circular(35.0),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                        child: TextFormField(
+                          // The validator receives the text that the user has entered.
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            labelText: 'Breed',
+                            contentPadding: EdgeInsets.only(
+                                left: 30, top: 0.0, bottom: 0.0),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.blueAccent, width: 3.0),
+                              borderRadius: BorderRadius.circular(35.0),
+                            ),
                           ),
+                          validator: (value) {
+                            breed = value;
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.phone,
+                          onSaved: (String? value) {},
                         ),
-                        validator: (value) {
-                          breed = value;
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.phone,
-                        onSaved: (String? value) {},
                       ),
-                    ),
-                    Container(
-                      margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
-                      child: TextFormField(
-                        // The validator receives the text that the user has entered.
-                        textAlign: TextAlign.left,
-                        decoration: InputDecoration(
-                          labelText: 'Fixed/Spayed',
-                          contentPadding:
-                              EdgeInsets.only(left: 30, top: 0.0, bottom: 0.0),
-                          border: OutlineInputBorder(
-                            borderSide: BorderSide(
-                                color: Colors.blueAccent, width: 3.0),
-                            borderRadius: BorderRadius.circular(35.0),
+                      Container(
+                        margin: const EdgeInsets.only(
+                            top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                        child: TextFormField(
+                          // The validator receives the text that the user has entered.
+                          textAlign: TextAlign.left,
+                          decoration: InputDecoration(
+                            labelText: 'Fixed/Spayed',
+                            contentPadding: EdgeInsets.only(
+                                left: 30, top: 0.0, bottom: 0.0),
+                            border: OutlineInputBorder(
+                              borderSide: BorderSide(
+                                  color: Colors.blueAccent, width: 3.0),
+                              borderRadius: BorderRadius.circular(35.0),
+                            ),
                           ),
+                          validator: (value) {
+                            popcon = value;
+                            if (value == null || value.isEmpty) {
+                              return 'Please enter some text';
+                            }
+                            return null;
+                          },
+                          keyboardType: TextInputType.phone,
+                          onSaved: (String? value) {},
                         ),
-                        validator: (value) {
-                          popcon = value;
-                          if (value == null || value.isEmpty) {
-                            return 'Please enter some text';
-                          }
-                          return null;
-                        },
-                        keyboardType: TextInputType.phone,
-                        onSaved: (String? value) {},
                       ),
-                    ),
-                    const SizedBox(height: 50),
-                    ElevatedButton(
-                      onPressed: () async {
-                        if (_formKey.currentState!.validate()) {
-                          // If the form is valid, display a snackbar. In the real world,
-                          // you'd often call a server or save the information in a database.
-                          ScaffoldMessenger.of(context).showSnackBar(
-                            const SnackBar(content: Text('Processing Data')),
-                          );
-                        }
-
-                        selectFile(name);
-                      },
-                      child: const Text("Add Profile Picture",
-                          style: TextStyle(fontSize: 11)),
-                    ),
-                    Text(fName, style: const TextStyle(fontSize: 11)),
-                    task != null ? buildUploadStatus(task!) : Container(),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: ElevatedButton(
+                      const SizedBox(height: 30),
+                      ElevatedButton(
                         onPressed: () async {
-                          // Validate returns true if the form is valid, or false otherwise.
                           if (_formKey.currentState!.validate()) {
                             // If the form is valid, display a snackbar. In the real world,
                             // you'd often call a server or save the information in a database.
@@ -310,96 +284,118 @@ class _AddPetState extends State<AddPet> {
                               const SnackBar(content: Text('Processing Data')),
                             );
                           }
-                          User? user = FirebaseAuth.instance.currentUser;
 
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user!.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .set({'name': name});
-
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .update({'species': species});
-
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .update({'sex': sex});
-
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .update({'age': age});
-
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .update({'weight': weight});
-
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .update({'breed': breed});
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .update({'fixed': popcon});
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .update({'color': color});
-
-                          await FirebaseFirestore.instance
-                              .collection('users')
-                              .doc(user.uid)
-                              .collection('pets')
-                              .doc(name)
-                              .update({'profile_url': ''});
-
-                          Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                HomePage(petdex: 0, dex: 0),
-                          ));
+                          selectFile(name);
                         },
-                        child: const Text('Submit'),
+                        child: const Text("Add Profile Picture",
+                            style: TextStyle(fontSize: 11)),
                       ),
-                    ),
-                    Padding(
-                      padding: const EdgeInsets.symmetric(vertical: 5.0),
-                      child: ElevatedButton(
-                        onPressed: () async {
-                          // Validate returns true if the form is valid, or false otherwise.
+                      Text(fName, style: const TextStyle(fontSize: 11)),
+                      task != null ? buildUploadStatus(task!) : Container(),
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // Validate returns true if the form is valid, or false otherwise.
+                            if (_formKey.currentState!.validate()) {
+                              // If the form is valid, display a snackbar. In the real world,
+                              // you'd often call a server or save the information in a database.
+                              ScaffoldMessenger.of(context).showSnackBar(
+                                const SnackBar(
+                                    content: Text('Processing Data')),
+                              );
+                            }
+                            User? user = FirebaseAuth.instance.currentUser;
 
-                          //Navigator.pop(context);
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user!.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .set({'name': name});
 
-                          Navigator.of(context)
-                              .pushReplacement(MaterialPageRoute(
-                            builder: (BuildContext context) =>
-                                HomePage(petdex: 0, dex: 0),
-                          ));
-                        },
-                        child: const Text('Cancel'),
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .update({'species': species});
+
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .update({'sex': sex});
+
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .update({'age': age});
+
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .update({'weight': weight});
+
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .update({'breed': breed});
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .update({'fixed': popcon});
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .update({'color': color});
+
+                            await FirebaseFirestore.instance
+                                .collection('users')
+                                .doc(user.uid)
+                                .collection('pets')
+                                .doc(name)
+                                .update({'profile_url': ''});
+
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  HomePage(petdex: 0, dex: 0),
+                            ));
+                          },
+                          child: const Text('Submit'),
+                        ),
                       ),
-                    ),
-                  ],
+                      Padding(
+                        padding: const EdgeInsets.symmetric(vertical: 5.0),
+                        child: ElevatedButton(
+                          onPressed: () async {
+                            // Validate returns true if the form is valid, or false otherwise.
+
+                            //Navigator.pop(context);
+
+                            Navigator.of(context)
+                                .pushReplacement(MaterialPageRoute(
+                              builder: (BuildContext context) =>
+                                  HomePage(petdex: 0, dex: 0),
+                            ));
+                          },
+                          child: const Text('Cancel'),
+                        ),
+                      ),
+                    ],
+                  ),
                 ),
               ),
             ),

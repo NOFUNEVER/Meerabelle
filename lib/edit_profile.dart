@@ -59,7 +59,7 @@ class _EditProfileState extends State<EditProfile> {
           _firstNameController.text = value.data()!['First Name'];
           _lastNameController.text = value.data()!['Last Name'];
           _addressController.text = value.data()!['Address'];
-          _nopetsController.text = value.data()!['#PETS'];
+          _nopetsController.text = value.data()!['Num Pets'];
           _dobController.text = value.data()!['DOB'];
 
 
@@ -71,9 +71,14 @@ class _EditProfileState extends State<EditProfile> {
         builder: (context, snapshot) {
           return Scaffold(
             appBar: AppBar(
-              title: const Text('Edit Pet Details'),
+              centerTitle: true,
+              title: const Text('Edit Profile '),
             ),
-            body: SingleChildScrollView(
+            body: Padding(
+              padding:EdgeInsets.all(15.0),
+              child: Card( child: Scrollbar(
+               isAlwaysShown: true,
+                child: SingleChildScrollView(
               child: Form(
                 key: _formKey,
                 autovalidateMode: AutovalidateMode.always,
@@ -83,7 +88,7 @@ class _EditProfileState extends State<EditProfile> {
                   children: [
                     Container(
                       margin: const EdgeInsets.only(
-                          top: 40.0, left: 40.0, right: 40.0, bottom: 20.0),
+                          top: 40.0, left: 40.0, right: 40.0, bottom: 10.0),
                       child: TextFormField(
                         // The validator receives the text that the user has entered.
                         textAlign: TextAlign.center,
@@ -111,7 +116,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(
-                          top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                          top: 20.0, left: 40.0, right: 40.0, bottom: 10.0),
                       child: TextFormField(
                         // The validator receives the text that the user has entered.
                         textAlign: TextAlign.center,
@@ -140,7 +145,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(
-                          top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                          top: 20.0, left: 40.0, right: 40.0, bottom: 10.0),
                       child: TextFormField(
                         // The validator receives the text that the user has entered.
                         textAlign: TextAlign.center,
@@ -169,7 +174,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(
-                          top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                          top: 20.0, left: 40.0, right: 40.0, bottom: 10.0),
                       child: TextFormField(
                         // The validator receives the text that the user has entered.
                         textAlign: TextAlign.center,
@@ -198,7 +203,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(
-                          top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                          top: 20.0, left: 40.0, right: 40.0, bottom: 10.0),
                       child: TextFormField(
                         // The validator receives the text that the user has entered.
                         textAlign: TextAlign.center,
@@ -228,7 +233,7 @@ class _EditProfileState extends State<EditProfile> {
                     ),
                     Container(
                       margin: const EdgeInsets.only(
-                          top: 20.0, left: 40.0, right: 40.0, bottom: 20.0),
+                          top: 20.0, left: 40.0, right: 40.0, bottom: 10.0),
                       child: TextFormField(
                         // The validator receives the text that the user has entered.
                         textAlign: TextAlign.center,
@@ -257,7 +262,7 @@ class _EditProfileState extends State<EditProfile> {
                       ),
                     ),
 
-                    const SizedBox(height: 50),
+                    const SizedBox(height: 10),
                     ElevatedButton(
                       onPressed: () async {
                         if (_formKey.currentState!.validate()) {
@@ -303,6 +308,21 @@ class _EditProfileState extends State<EditProfile> {
                               .doc(user.uid)
                               .update({'Phone Number': phone});
 
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user.uid)
+                              .update({'DOB': dob});
+
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user.uid)
+                              .update({'Address': address});
+                          await FirebaseFirestore.instance
+                              .collection('users')
+                              .doc(user.uid)
+                              .update({'Num Pets': nopets});
+
+
                           Navigator.of(context)
                               .pushReplacement(MaterialPageRoute(
                             builder: (BuildContext context) =>
@@ -316,6 +336,9 @@ class _EditProfileState extends State<EditProfile> {
                 ),
               ),
             ),
+              ),
+            ),
+          ),
           );
         });
   }

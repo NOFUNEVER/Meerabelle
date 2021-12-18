@@ -35,7 +35,7 @@ class LoginScreen extends StatefulWidget {
 class _LoginScreenState extends State<LoginScreen> {
   @override
   User? user =  FirebaseAuth.instance.currentUser;
-  Duration get loginTime => Duration(milliseconds: 2250);
+  Duration get loginTime => Duration(milliseconds: 4250);
 
   // sign in with google
   Future<UserCredential> signInWithGoogle(context) async {
@@ -178,7 +178,7 @@ return user;
         ),
       ],
       onSubmitAnimationCompleted: () async {
-     //   User? user = FirebaseAuth.instance.currentUser;
+        User? user = await FirebaseAuth.instance.currentUser;
 
        // print(user!.uid);
 
@@ -210,7 +210,7 @@ return user;
 
         await FirebaseFirestore.instance
             .collection('users')
-            .doc(user!.uid)
+            .doc(user.uid)
             .get()
             .then((value) async {
           if (value.exists ) {

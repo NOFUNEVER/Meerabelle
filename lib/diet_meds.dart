@@ -6,6 +6,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:path/path.dart';
 
 class DietMeds extends StatefulWidget {
@@ -78,14 +79,15 @@ class _DietMedsState extends State<DietMeds> {
             .doc(user.uid)
             .collection('pets')
             .get()
-        //      .get()a
-
             .then((value) {
           petsList = value.docs;
-          print('farts ' + petsList.elementAt(curPet)['name'].toString());
+          print(' ' + petsList.elementAt(curPet)['name'].toString());
           _allergiesController.text = petsList.elementAt(curPet)['allergies'].toString();
           _foodController.text = petsList.elementAt(curPet)['food'].toString();
-          _medsController.text = petsList.elementAt(curPet)['medications'].toString();
+         _medsController.text = petsList.elementAt(curPet)['medications'].toString();
+         allergy =_allergiesController.text;
+         meds = _medsController.text;
+         food = _foodController.text;
 
         }),
         builder: (context, snapshot) {
@@ -112,26 +114,26 @@ class _DietMedsState extends State<DietMeds> {
                                 right: 5.0),
                             child: Card(
                               elevation: 19,
-                              child: GestureDetector(
-                                onLongPress: () {
-                                  if (food_enable == false) {
-                                    food_enable = true;
-                                    setState(() => food_enable);
-                                  }
 
-                                  _foodController.selection =
-                                      TextSelection.fromPosition(TextPosition(
-                                          offset:
-                                          _foodController.text.length));
-                                },
                                 child: Container(
+
                                   padding: const EdgeInsets.only(
                                       left: 7.0,
                                       bottom: 7.0,
                                       top: 7.0,
                                       right: 7.0),
-                                  child: TextFormField(
-                                    focusNode: _focusNode,
+                                  child:
+                                   GestureDetector(
+                                    onLongPress: () {
+                            if (food_enable == false) {
+                            food_enable = true;
+                            setState(() => food_enable);
+                            }
+
+
+                            },
+                               child:   TextFormField(
+
                                     autofocus:false ,
                                     textInputAction: TextInputAction.done,
                                     onEditingComplete: () async {
@@ -198,7 +200,7 @@ class _DietMedsState extends State<DietMeds> {
                                           .toString())
                                           .update({'food': food});
                                       food_enable = false;
-                                      setState(() => food_enable);
+                                    //  setState(() => food_enable);
                                     },
                                     onChanged: (String value) {
                                       food = value;
@@ -215,6 +217,7 @@ class _DietMedsState extends State<DietMeds> {
                         ),
                       ],
                     ),
+
                     Row(
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
@@ -227,26 +230,26 @@ class _DietMedsState extends State<DietMeds> {
                                 right: 5.0),
                             child: Card(
                               elevation: 19,
-                              child: GestureDetector(
-                                onLongPress: () {
-                                  if (allergy_enable == false) {
-                                    allergy_enable = true;
-                                    setState(() => allergy_enable);
-                                  }
 
-                                  _allergiesController.selection =
-                                      TextSelection.fromPosition(TextPosition(
-                                          offset:
-                                          _allergiesController.text.length));
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 7.0,
-                                      bottom: 7.0,
-                                      top: 7.0,
-                                      right: 7.0),
-                                  child: TextFormField(
-                                    focusNode: _focusNode,
+                              child: Container(
+
+                                padding: const EdgeInsets.only(
+                                    left: 7.0,
+                                    bottom: 7.0,
+                                    top: 7.0,
+                                    right: 7.0),
+                                child:
+                                GestureDetector(
+                                  onLongPress: () {
+                                    if (allergy_enable == false) {
+                                      allergy_enable = true;
+                                      setState(() => allergy_enable);
+                                    }
+
+
+                                  },
+                                  child:   TextFormField(
+
                                     autofocus:false ,
                                     textInputAction: TextInputAction.done,
                                     onEditingComplete: () async {
@@ -260,7 +263,7 @@ class _DietMedsState extends State<DietMeds> {
                                           .doc(petsList
                                           .elementAt(curPet)['name']
                                           .toString())
-                                          .update({'food': food});
+                                          .update({'allergies': allergy});
                                       allergy_enable = false;
                                       setState(() => allergy_enable);
 
@@ -302,7 +305,6 @@ class _DietMedsState extends State<DietMeds> {
                                     },
                                     controller: _allergiesController,
                                     onFieldSubmitted: (String? value) async {
-                                      //  setState(() => species);
                                       allergy = value;
                                       await FirebaseFirestore.instance
                                           .collection('users')
@@ -313,7 +315,7 @@ class _DietMedsState extends State<DietMeds> {
                                           .toString())
                                           .update({'allergies': allergy});
                                       allergy_enable = false;
-                                      setState(() => allergy_enable);
+                                      //  setState(() => food_enable);
                                     },
                                     onChanged: (String value) {
                                       allergy = value;
@@ -342,26 +344,26 @@ class _DietMedsState extends State<DietMeds> {
                                 right: 5.0),
                             child: Card(
                               elevation: 19,
-                              child: GestureDetector(
-                                onLongPress: () {
-                                  if (meds_enable == false) {
-                                    meds_enable = true;
-                                    setState(() => meds_enable);
-                                  }
 
-                                  _medsController.selection =
-                                      TextSelection.fromPosition(TextPosition(
-                                          offset:
-                                          _medsController.text.length));
-                                },
-                                child: Container(
-                                  padding: const EdgeInsets.only(
-                                      left: 7.0,
-                                      bottom: 7.0,
-                                      top: 7.0,
-                                      right: 7.0),
-                                  child: TextFormField(
-                                    focusNode: _focusNode,
+                              child: Container(
+
+                                padding: const EdgeInsets.only(
+                                    left: 7.0,
+                                    bottom: 7.0,
+                                    top: 7.0,
+                                    right: 7.0),
+                                child:
+                                GestureDetector(
+                                  onLongPress: () {
+                                    if (meds_enable == false) {
+                                      meds_enable = true;
+                                      setState(() => meds_enable);
+                                    }
+
+
+                                  },
+                                  child:   TextFormField(
+
                                     autofocus:false ,
                                     textInputAction: TextInputAction.done,
                                     onEditingComplete: () async {
@@ -375,7 +377,7 @@ class _DietMedsState extends State<DietMeds> {
                                           .doc(petsList
                                           .elementAt(curPet)['name']
                                           .toString())
-                                          .update({'food': food});
+                                          .update({'medications': meds});
                                       meds_enable = false;
                                       setState(() => meds_enable);
 
@@ -417,7 +419,6 @@ class _DietMedsState extends State<DietMeds> {
                                     },
                                     controller: _medsController,
                                     onFieldSubmitted: (String? value) async {
-                                      //  setState(() => species);
                                       meds = value;
                                       await FirebaseFirestore.instance
                                           .collection('users')
@@ -428,7 +429,7 @@ class _DietMedsState extends State<DietMeds> {
                                           .toString())
                                           .update({'medications': meds});
                                       meds_enable = false;
-                                      setState(() => meds_enable);
+                                      //  setState(() => food_enable);
                                     },
                                     onChanged: (String value) {
                                       meds = value;
@@ -445,6 +446,11 @@ class _DietMedsState extends State<DietMeds> {
                         ),
                       ],
                     ),
+
+                    const SizedBox(
+                      height: 5,
+                    ),
+
                     Padding(
                       padding: const EdgeInsets.symmetric(vertical: 5.0),
                       child: ElevatedButton(
@@ -492,7 +498,7 @@ class _DietMedsState extends State<DietMeds> {
                     const SizedBox(
                       height: 5,
                     ),
-
+/*
                     Row(
                       mainAxisAlignment: MainAxisAlignment.end,
                       crossAxisAlignment: CrossAxisAlignment.end,
@@ -518,7 +524,7 @@ class _DietMedsState extends State<DietMeds> {
                             }),
                       ],
                     ),
-
+*/
                   ],
                 ),
               ),),

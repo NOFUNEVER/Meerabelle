@@ -1,0 +1,54 @@
+{
+  "project_info": {
+    "project_number": "774833527223",
+    "project_id": "meerabelle-88ee6",
+    "storage_bucket": "meerabelle-88ee6.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:774833527223:android:cef4875311a66e96b63032",
+        "android_client_info": {
+          "package_name": "nofunever.org.meerabelle"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "774833527223-tp6nt7k6ae61gkk1dea7q7n1pf41k4ln.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "nofunever.org.meerabelle",
+            "certificate_hash": "b720c5b184229716ed782ee15f436296e393273e"
+          }
+        },
+        {
+          "client_id": "774833527223-0hepkqvgfn0jkpd4vnofcvve3dkg6vbj.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyB9xrKAHtysfLKwcQ8ylJZ8q_dyikM1ydI"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "774833527223-0hepkqvgfn0jkpd4vnofcvve3dkg6vbj.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "774833527223-2b4k4n379917f614hn9duqdarnqmb461.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.nofunever.org.meerabelle"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

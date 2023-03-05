@@ -24,6 +24,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: _title,
       theme: ThemeData(scaffoldBackgroundColor: Colors.blue),
+
       home:  LoginScreen(),
     );
   }
